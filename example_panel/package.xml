@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
+  Copyright (C) 2024 Avular B.V. - All Rights Reserved
+  You may use this code under the terms of the Avular
+  Software End-User License Agreement.
+
+  You should have received a copy of the Avular
+  Software End-User License Agreement license with
+  this file. If not, please write to: legal@avular.com
+-->
+<package format="3">
+  <name>cerebra_example_panel</name>
+  <version>0.0.0</version>
+  <description>An example panel that shows a minimal panel with topic publisher and subscriber, and
+    a properties panel</description>
+  <maintainer email="n.rood@avular.com">Niels Rood</maintainer>
+  <license>Avular Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+  <depend>pluginlib</depend>
+  <depend>std_msgs</depend>
+  <depend>rviz_common</depend>
+
+  <exec_depend>libqt5-core</exec_depend>
+  <exec_depend>libqt5-gui</exec_depend>
+  <exec_depend>libqt5-widgets</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
