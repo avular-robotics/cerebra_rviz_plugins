@@ -33,5 +33,14 @@
 
   <export>
     <build_type>ament_cmake</build_type>
+    <debian_depend>ros-humble-rclcpp</debian_depend>
+    <debian_depend>ros-humble-pluginlib</debian_depend>
+    <debian_depend>ros-humble-std-msgs</debian_depend>
+    <debian_depend>ros-humble-rviz-common</debian_depend>
+    <debian_depend>libqt5core5a</debian_depend>
+    <debian_depend>libqt5gui5</debian_depend>
+    <debian_depend>libqt5widgets5</debian_depend>
+    <debian_depend>ros-humble-ament-lint-auto</debian_depend>
+    <debian_depend>ros-humble-ament-lint-common</debian_depend>
   </export>
 </package>
