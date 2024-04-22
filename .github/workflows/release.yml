@@ -1,0 +1,16 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  build-test-publish:
+    uses: ./.github/workflows/build.yml
+    with:
+      build-type: Release
+      test: true
+      package: true
+      publish: true

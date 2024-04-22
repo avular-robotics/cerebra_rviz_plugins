@@ -1,0 +1,172 @@
+name: build-test
+
+on:
+  workflow_call:
+    inputs:
+      build-size:
+        description: 'The size of the build'
+        default: 'medium-linux'
+        type: string
+      arch:
+        description: 'The architecture to build for'
+        default: 'amd64'
+        type: string
+      packages:
+        description: 'The packages to build'
+        type: string
+      build-type:
+        description: 'The type of build to perform'
+        default: 'Release'
+        type: string
+      test:
+        description: 'Whether to run tests'
+        default: true
+        type: boolean
+      package:
+        description: 'Whether to package the build'
+        default: false
+        type: boolean
+      publish:
+        description: 'Whether to publish the build'
+        default: false
+        type: boolean
+
+  workflow_dispatch:
+    inputs:
+      build-size:
+        description: 'The size of the build'
+        default: 'medium-linux'
+        type: string
+      arch:
+        description: 'The architecture to build for'
+        default: 'amd64'
+        type: string
+      packages:
+        description: 'The packages to build'
+        type: string
+      build-type:
+        description: 'The type of build to perform'
+        default: 'Release'
+        type: choice
+        options:
+          - 'Debug'
+          - 'Release'
+          - 'RelWithDebInfo'
+          - 'MinSizeRel'
+      test:
+        description: 'Whether to run tests'
+        default: true
+        type: boolean
+      package:
+        description: 'Whether to package the build'
+        default: false
+        type: boolean
+      publish:
+        description: 'Whether to publish the build'
+        default: false
+        type: boolean
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-test:
+    runs-on: [docker, "${{inputs.build-size}}"]
+    container:
+      image: ghcr.io/avular-robotics/avular-base:ros-humble
+    steps:
+      - name: Install checkout dependencies
+        run: |
+          apt update
+          apt install -y --no-install-recommends git python3-pip
+          pip3 install GitPython
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: repo
+
+      - name: Install dependencies
+        run: |
+          apt update
+          apt install -y --no-install-recommends $(cat $GITHUB_WORKSPACE/repo/dependencies-${{inputs.arch}}.txt)
+          # Install build dependencies
+          apt install -y --no-install-recommends ssh git python3-colcon-common-extensions build-essential curl
+
+      - name: Setup workspace
+        id: setup_workspace
+        run: |
+          mkdir -p src
+          # This returns a list of all packages in the repository with the path where they can be found
+          packages=$(python3 $GITHUB_WORKSPACE/repo/.github/get_all_packages.py --repo $GITHUB_WORKSPACE/repo)
+          # Create a symbolic link for each package in the workspace
+          echo $packages | xargs -n 2 sh -c 'ln -s $1 src/$0'
+          package_names=$(echo $packages | cut -d' ' -f1 | tr '\n' ' ')
+          echo "packages=$package_names" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: |
+          source /opt/ros/humble/setup.bash
+          pkg_opts=$(if [ -n "${{ inputs.packages }}" ]]; then echo "--packages-up-to ${{ inputs.packages }}"; else echo ""; fi)
+          colcon build \
+            $pkg_opts \
+            --cmake-args \
+            -DCMAKE_BUILD_TYPE=${{inputs.build-type}} \
+            --event-handlers console_direct+
+
+      - name: Test
+        if: ${{inputs.test}}
+        run: |
+          source /opt/ros/humble/setup.bash
+
+          # Disable exit on error to ensure that the test results are reported
+          set +e
+          colcon test --return-code-on-test-failure
+          test_result=$?
+          # Re-enable exit on error
+          set -e
+
+          # Report test results
+          colcon test-result --verbose > step_output.txt || true
+          echo "# Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tee -a $GITHUB_STEP_SUMMARY < step_output.txt
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          exit $test_result
+
+      - name: Retrieve packaging tools
+        if: ${{inputs.package}}
+        uses: actions/checkout@v4
+        with:
+          repository: avular-robotics/binary_repository_management
+          path: packaging
+          fetch-depth: 1
+          token: ${{ secrets.CI_ACCESS_TOKEN }}
+
+      - name: Package
+        if: ${{inputs.package}}
+        run: |
+          source /opt/ros/humble/setup.bash
+          packages=$(if [ -n "${{ inputs.packages }}" ]; then echo ${{ inputs.packages }}; else echo ${{ steps.setup_workspace.outputs.packages }}; fi)
+          echo "Generating debian packages for $packages"
+          $GITHUB_WORKSPACE/packaging/scripts/generate_packages humble $GITHUB_WORKSPACE $packages
+
+      - name: Upload packages
+        if: ${{inputs.package}}
+        uses: actions/upload-artifact@v2
+        with:
+          name: packages
+          path: $GITHUB_WORKSPACE/*.deb
+
+      - name: Publish
+        if: ${{inputs.publish && inputs.package}}
+        run: |
+          for deb in $(find $GITHUB_WORKSPACE -name "*.deb"); do
+            filename=$(basename $deb)
+            echo "Publishing $filename"
+            curl -X POST -T $deb --user api:${{ secrets.PROGET_API_KEY }} "https://packages.avular.dev/debian-packages/upload/development/main/$filename"
+          done
+

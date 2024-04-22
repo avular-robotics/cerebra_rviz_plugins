@@ -10,7 +10,7 @@
   this file. If not, please write to: legal@avular.com
 -->
 <package format="3">
-  <name>cerebra_example_panel</name>
+  <name>example_panel</name>
   <version>0.0.0</version>
   <description>An example panel that shows a minimal panel with topic publisher and subscriber, and
     a properties panel</description>
