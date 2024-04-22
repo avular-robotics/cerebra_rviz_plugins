@@ -21,37 +21,39 @@
 
 namespace cerebra_rviz_plugins
 {
-    class ExamplePanel : public rviz_common::Panel
-    {
-        Q_OBJECT
+  class ExamplePanel: public rviz_common::Panel
+  {
+    Q_OBJECT
 
-        public:
-            explicit ExamplePanel(QWidget *parent = 0);
-            virtual ~ExamplePanel() = default;
+public:
+    explicit ExamplePanel(QWidget * parent = 0);
+    virtual ~ExamplePanel() = default;
 
-            void onInitialize() override;
+    void onInitialize() override;
 
-            /// Load and save configuration data
-            void load(const rviz_common::Config &config) override;
-            void save(rviz_common::Config config) const override;
-        private Q_SLOTS:
-            void initializeTopics();
-            void onButtonPressed();
-            void onTopicMessage(std_msgs::msg::String::SharedPtr message);
-        private:
-            rclcpp::Publisher<std_msgs::msg::String>::SharedPtr _publisher;
-            rclcpp::Subscription<std_msgs::msg::String>::SharedPtr _subscription;
+    /// Load and save configuration data
+    void load(const rviz_common::Config & config) override;
+    void save(rviz_common::Config config) const override;
 
-            QLabel *_topic_display{nullptr};
-            QLineEdit *_field{nullptr};
-            QPushButton *_button{nullptr};
+private Q_SLOTS:
+    void initializeTopics();
+    void onButtonPressed();
+    void onTopicMessage(std_msgs::msg::String::SharedPtr message);
 
-            QVBoxLayout *_main_layout{nullptr};
-            QHBoxLayout *_publish_layout{nullptr};
+private:
+    rclcpp::Publisher < std_msgs::msg::String > ::SharedPtr _publisher;
+    rclcpp::Subscription < std_msgs::msg::String > ::SharedPtr _subscription;
 
-            rviz_common::properties::PropertyTreeModel *_property_model;
-            rviz_common::properties::PropertyTreeWithHelp *_property_widget;
-            rviz_common::properties::StringProperty *_input_topic;
-            rviz_common::properties::StringProperty *_output_topic;
-    };
+    QLabel * _topic_display {nullptr};
+    QLineEdit * _field {nullptr};
+    QPushButton * _button {nullptr};
+
+    QVBoxLayout * _main_layout {nullptr};
+    QHBoxLayout * _publish_layout {nullptr};
+
+    rviz_common::properties::PropertyTreeModel * _property_model;
+    rviz_common::properties::PropertyTreeWithHelp * _property_widget;
+    rviz_common::properties::StringProperty * _input_topic;
+    rviz_common::properties::StringProperty * _output_topic;
+  };
 }
