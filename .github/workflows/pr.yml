@@ -7,6 +7,10 @@ on:
       - ready_for_review
       - synchronize
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
 jobs:
   build-test:
     uses: ./.github/workflows/build.yml
