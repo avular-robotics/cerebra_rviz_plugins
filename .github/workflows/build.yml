@@ -108,7 +108,7 @@ jobs:
       - name: Build
         run: |
           source /opt/ros/humble/setup.bash
-          pkg_opts=$(if [ -n "${{ inputs.packages }}" ]]; then echo "--packages-up-to ${{ inputs.packages }}"; else echo ""; fi)
+          pkg_opts=$(if [[ -n "${{ inputs.packages }}" ]]; then echo "--packages-up-to ${{ inputs.packages }}"; else echo ""; fi)
           colcon build \
             $pkg_opts \
             --cmake-args \
@@ -116,6 +116,7 @@ jobs:
             --event-handlers console_direct+
 
       - name: Test
+        id: test
         if: ${{inputs.test}}
         run: |
           source /opt/ros/humble/setup.bash
@@ -134,8 +135,17 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           tee -a $GITHUB_STEP_SUMMARY < step_output.txt
           echo '```' >> $GITHUB_STEP_SUMMARY
+          cp $GITHUB_STEP_SUMMARY ./test_results.md
 
           exit $test_result
+
+      - name: Add Coverage PR comment
+        if: ${{inputs.test && always() && !cancelled() && github.event_name == 'pull_request'}}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          number: ${{ github.event.number }}
+          recreate: true
+          path: ./test_results.md
 
       - name: Retrieve packaging tools
         if: ${{inputs.package}}
@@ -150,7 +160,7 @@ jobs:
         if: ${{inputs.package}}
         run: |
           source /opt/ros/humble/setup.bash
-          packages=$(if [ -n "${{ inputs.packages }}" ]; then echo ${{ inputs.packages }}; else echo ${{ steps.setup_workspace.outputs.packages }}; fi)
+          packages=$(if [[ -n "${{ inputs.packages }}" ]]; then echo ${{ inputs.packages }}; else echo ${{ steps.setup_workspace.outputs.packages }}; fi)
           echo "Generating debian packages for $packages"
           $GITHUB_WORKSPACE/packaging/scripts/generate_packages humble $GITHUB_WORKSPACE $packages
 
