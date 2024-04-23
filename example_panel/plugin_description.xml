@@ -7,7 +7,7 @@
   Software End-User License Agreement license with
   this file. If not, please write to: legal@avular.com
 -->
-<library path="cerebra_example_panel">
+<library path="example_panel">
   <class name="cerebra_rviz_plugins/ExamplePanel" type="cerebra_rviz_plugins::ExamplePanel"
     base_class_type="rviz_common::Panel">
     <description>An example panel that shows a minimal panel with topic publisher and

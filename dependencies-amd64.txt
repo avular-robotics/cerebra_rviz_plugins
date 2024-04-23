@@ -1,0 +1,9 @@
+ros-humble-rclcpp
+ros-humble-pluginlib
+ros-humble-std-msgs
+ros-humble-rviz-common
+libqt5core5a
+libqt5gui5
+libqt5widgets5
+ros-humble-ament-lint-auto
+ros-humble-ament-lint-common

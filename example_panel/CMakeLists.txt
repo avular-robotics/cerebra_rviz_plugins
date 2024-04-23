@@ -7,7 +7,7 @@
 # this file. If not, please write to: legal@avular.com
 
 cmake_minimum_required(VERSION 3.8)
-project(cerebra_example_panel)
+project(example_panel)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)

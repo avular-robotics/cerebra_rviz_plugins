@@ -1,0 +1,66 @@
+name: build-docs
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: 'Version to build'
+        default: 'latest'
+
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        description: 'Version to build'
+        default: 'latest'
+
+jobs:
+  build_docs:
+    runs-on: [linux, docker, micro-linux]
+    container:
+      image: python:latest
+    timeout-minutes: 10
+
+    steps:
+    - name: Install dependencies
+      run: |
+        apt update
+        apt install git-lfs
+
+    - name: Create version output
+      id: version
+      shell: bash
+      run: |
+        if [[ -z "${{ inputs.version }}" ]]; then
+          echo "No version specified, using latest"
+          version="latest"
+        else
+          echo "Version specified: ${{ inputs.version }}"
+          version="${{ inputs.version }}"
+        fi
+        echo "version=$version" >> $GITHUB_OUTPUT
+        echo "Publishing to private at https://static-host.avular.dev/cerebra_rviz/docs/$version/" | tee --append $GITHUB_STEP_SUMMARY
+
+    - uses: actions/checkout@v3
+      with:
+        lfs: true
+        fetch-depth: 1
+
+    - name: Set ownership
+      run: |
+        # this is to fix GIT not liking owner of the checkout dir
+        chown -R $(id -u):$(id -g) $PWD
+
+    - name: Build documentation
+      run: |
+        pip install -r docs/requirements.txt
+        mkdir -p build
+        mkdocs build --config-file mkdocs.yml --site-dir "$PWD/build" --clean
+
+    - name: Publish documentation
+      run: |
+        tar -cf docs.tar -C build .
+        curl -X POST -H "Content-Type: application/x-tar" -T docs.tar \
+          "https://static-host.avular.dev/api/upload?project=cerebra_rviz&secret=${{ secrets.STATIC_HOST_SECRET }}&path=/docs/${{ steps.version.outputs.version }}"
+

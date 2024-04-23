@@ -1,0 +1,27 @@
+name: pr
+
+on:
+  pull_request:
+    types:
+      - review_requested
+      - ready_for_review
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+    with:
+      test: true
+      package: true
+
+  build-docs:
+    uses: ./.github/workflows/build-docs.yml
+    secrets: inherit
+    with:
+      version: pr-${{ github.event.number }}
+

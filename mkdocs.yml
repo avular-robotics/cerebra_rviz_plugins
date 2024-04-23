@@ -1,0 +1,61 @@
+site_name: Cerebra RViz
+site_url: https://static-host.avular.dev/cerebra_rviz/
+
+nav:
+  - Home: index.md
+
+# Theme
+theme:
+  name: material
+  palette:
+  # Palette toggle for light mode
+  - scheme: default
+    primary: red
+    accent: blue
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+  # Palette toggle for dark mode
+  - scheme: slate
+    primary: red
+    accent: blue
+    toggle:
+      icon: material/brightness-4
+      name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  logo: styling/favicon.ico
+  favicon: styling/favicon.ico
+  font:
+    text: Raleway
+    code: Space Mono
+
+use_directory_urls: false
+
+validation:
+  omitted_files: warn
+  absolute_links: warn
+  unrecognized_links: warn
+
+# Customizations
+extra_css:
+  - styling/avular.css
+
+extra:
+  version:
+    provider: mike
+  search:
+    separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      toc_depth: 3
