@@ -177,6 +177,5 @@ jobs:
           for deb in $(find $GITHUB_WORKSPACE -name "*.deb"); do
             filename=$(basename $deb)
             echo "Publishing $filename"
-            curl -X POST -T $deb --user api:${{ secrets.PROGET_API_KEY }} "https://packages.avular.dev/debian-packages/upload/development/main/$filename"
+            curl -X POST -T $deb --user api:${{ secrets.PROGET_API_KEY }} --fail-with-body "https://packages.avular.dev/debian-packages/upload/development/main/$filename"
           done
-
