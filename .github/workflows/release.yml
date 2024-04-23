@@ -14,3 +14,8 @@ jobs:
       test: true
       package: true
       publish: true
+
+  build-docs:
+    uses: ./.github/workflows/build-docs.yml
+    with:
+      version: ${{ github.ref }}

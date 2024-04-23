@@ -13,3 +13,9 @@ jobs:
     with:
       test: true
       package: true
+
+  build-docs:
+    uses: ./.github/workflows/build-docs.yml
+    with:
+      version: pr-${{ github.event.number }}
+

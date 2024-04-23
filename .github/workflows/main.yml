@@ -11,3 +11,8 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       test: true
+
+  build-docs:
+    uses: ./.github/workflows/build-docs.yml
+    with:
+      version: latest
