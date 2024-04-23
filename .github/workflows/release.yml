@@ -9,6 +9,7 @@ on:
 jobs:
   build-test-publish:
     uses: ./.github/workflows/build.yml
+    secrets: inherit
     with:
       build-type: Release
       test: true
@@ -17,5 +18,6 @@ jobs:
 
   build-docs:
     uses: ./.github/workflows/build-docs.yml
+    secrets: inherit
     with:
       version: ${{ github.ref }}
