@@ -1,0 +1,2 @@
+#!/bin/bash
+rviz2 -d /usr/share/cerebra-rviz/cerebra.rviz

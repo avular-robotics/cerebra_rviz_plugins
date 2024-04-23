@@ -1,0 +1,10 @@
+Package: cerebra-rviz
+Version: 0.0.0
+Maintainer: Niels Rood <n.rood@avular.com>
+Architecture: all
+Description: Run RViz with a configuration specifically meant for working with Avular robots
+ Includes script for running RViz with a Cerebra configuration file. Also
+ depends on all the plugins required to run RViz with this configuration file.
+Priority: optional
+Section: utils
+Depends: ros-humble-rviz2
