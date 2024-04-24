@@ -4,21 +4,10 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /Estimated pose1/Shape1
         - /Local map1/Topic1
         - /LiDAR1/Topic1
       Splitter Ratio: 0.5
     Tree Height: 436
-  - Class: rviz_common/Selection
-    Name: Selection
-  - Class: rviz_common/Tool Properties
-    Expanded:
-      - /2D Goal Pose1
-      - /Publish Point1
-    Name: Tool Properties
-    Splitter Ratio: 0.5886790156364441
   - Class: rviz_common/Views
     Expanded:
       - /Current View1
@@ -36,7 +25,7 @@ Visualization Manager:
       Cell Size: 1
       Class: rviz_default_plugins/Grid
       Color: 160; 160; 164
-      Enabled: true
+      Enabled: false
       Line Style:
         Line Width: 0.029999999329447746
         Value: Lines
@@ -49,7 +38,7 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
-      Value: true
+      Value: false
     - Angle Tolerance: 0.10000000149011612
       Class: rviz_default_plugins/Odometry
       Covariance:
@@ -76,11 +65,11 @@ Visualization Manager:
         Axes Length: 0.5
         Axes Radius: 0.05000000074505806
         Color: 255; 25; 0
-        Head Length: 0.30000001192092896
+        Head Length: 0.10000000149011612
         Head Radius: 0.10000000149011612
-        Shaft Length: 1
+        Shaft Length: 0.4000000059604645
         Shaft Radius: 0.05000000074505806
-        Value: Axes
+        Value: Arrow
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -111,7 +100,7 @@ Visualization Manager:
       Use Timestamp: false
       Value: true
     - Class: rviz_default_plugins/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: false
@@ -122,7 +111,7 @@ Visualization Manager:
       Show Names: false
       Tree: {}
       Update Interval: 0
-      Value: true
+      Value: false
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
       Collision Enabled: false
@@ -266,31 +255,6 @@ Visualization Manager:
     - Class: rviz_default_plugins/FocusCamera
     - Class: rviz_default_plugins/Measure
       Line color: 128; 128; 0
-    - Class: rviz_default_plugins/SetInitialPose
-      Covariance x: 0.25
-      Covariance y: 0.25
-      Covariance yaw: 0.06853891909122467
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /initialpose
-    - Class: rviz_default_plugins/SetGoal
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /goal_pose
-    - Class: rviz_default_plugins/PublishPoint
-      Single click: true
-      Topic:
-        Depth: 5
-        Durability Policy: Volatile
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Value: /clicked_point
   Transformation:
     Current:
       Class: rviz_default_plugins/TF
@@ -298,7 +262,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/ThirdPersonFollower
-      Distance: 2.744905948638916
+      Distance: 3.5963454246520996
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -313,10 +277,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.2853981852531433
+      Pitch: 0.5
       Target Frame: base_link
       Value: ThirdPersonFollower (rviz_default_plugins)
-      Yaw: 3.1403942108154297
+      Yaw: 3.1414999961853027
     Saved:
       - Class: rviz_default_plugins/ThirdPersonFollower
         Distance: 3.5963454246520996
@@ -334,10 +298,10 @@ Visualization Manager:
         Invert Z Axis: false
         Name: ThirdPersonFollower
         Near Clip Distance: 0.009999999776482582
-        Pitch: 0.27539828419685364
+        Pitch: 0.5
         Target Frame: base_link
         Value: ThirdPersonFollower (rviz_default_plugins)
-        Yaw: 3.120396852493286
+        Yaw: 3.1414999961853027
       - Class: rviz_default_plugins/Orbit
         Distance: 4.644041061401367
         Enable Stereo Rendering:
@@ -366,12 +330,8 @@ Window Geometry:
   Height: 720
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000300000000000001560000023dfc0200000006fb000000100044006900730070006c006100790073010000003b0000023d000000c700fffffffb0000001200530065006c0065006300740069006f006e00000001300000006e0000005c00fffffffb00000018004500780061006d0070006c006500500061006e0065006c0000000150000002160000000000000000fb0000000c00430061006d0065007200610000000268000001950000002800fffffffb0000000a0049006d00610067006500000002c30000013a0000000000000000fb0000000c00430061006d00650072006100000002600000019d000000000000000000000001000001410000023dfc0200000003fb0000000a00560069006500770073010000003b0000023d000000a000fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000003b0000032b0000005c00fffffffb00000012005400650073007400500061006e0065006c010000003b0000032b0000000000000000000000030000050000000037fc0100000001fb0000000800540069006d00650100000000000005000000025300ffffff0000025d0000023d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
-  Selection:
-    collapsed: false
+  QMainWindow State: 000000ff00000000fd0000000300000000000001560000023dfc0200000006fb000000100044006900730070006c006100790073010000003b0000023d000000c700fffffffb0000001200530065006c0065006300740069006f006e00000001300000006e0000000000000000fb00000018004500780061006d0070006c006500500061006e0065006c0000000150000002160000000000000000fb0000000c00430061006d0065007200610000000268000001950000002800fffffffb0000000a0049006d00610067006500000002c30000013a0000000000000000fb0000000c00430061006d00650072006100000002600000019d000000000000000000000001000001410000023dfc0200000003fb0000000a00560069006500770073010000003b0000023d000000a000fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073000000003b0000032b0000000000000000fb00000012005400650073007400500061006e0065006c010000003b0000032b0000000000000000000000030000050000000037fc0100000001fb0000000800540069006d00650100000000000005000000025300ffffff0000025d0000023d00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Time:
-    collapsed: false
-  Tool Properties:
     collapsed: false
   Views:
     collapsed: false
