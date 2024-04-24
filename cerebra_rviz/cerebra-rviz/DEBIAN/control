@@ -1,5 +1,5 @@
 Package: cerebra-rviz
-Version: 0.0.0
+Version: 0.1.0
 Maintainer: Niels Rood <n.rood@avular.com>
 Architecture: all
 Description: Run RViz with a configuration specifically meant for working with Avular robots
