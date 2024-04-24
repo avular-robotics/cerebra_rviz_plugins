@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot name="origin" xmlns:xsi="https://raw.githubusercontent.com/ros/urdfdom/master/xsd/urdf.xsd">
+    <material name="black">
+        <color rgba="0.25 0.25 0.25 1"/>
+    </material>
+    <link name="base_link">
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="file:///usr/share/cerebra-rviz/meshes/main_body_v10.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+    <link name="left_front_wheel">
+        <origin xyz="0.205 0.2 0.1175"/>
+        <visual>
+            <origin xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="file:///usr/share/cerebra-rviz/meshes/wheel_T530.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+    <link name="right_front_wheel">
+        <origin xyz="0.205 -0.2 0.1175" rpy="0 0 3.141593"/>
+        <visual>
+            <origin xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="file:///usr/share/cerebra-rviz/meshes/wheel_T530.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+    <link name="left_rear_wheel">
+        <origin xyz="-0.205 0.2 0.1175"/>
+        <visual>
+            <origin xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="file:///usr/share/cerebra-rviz/meshes/wheel_T530.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+    <link name="right_rear_wheel">
+        <origin xyz="-0.205 -0.2 0.1175" rpy="0 0 3.141593"/>
+        <visual>
+            <origin xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="file:///usr/share/cerebra-rviz/meshes/wheel_T530.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+    <joint type="revolute" name="left_front_wheel_hinge">
+        <child link="left_front_wheel"/>
+        <parent link="base_link"/>
+        <axis xyz="0 1 0"/>
+        <limit effort="0" velocity="0"/>
+    </joint>
+    <joint type="revolute" name="right_front_wheel_hinge">
+        <child link="right_front_wheel"/>
+        <parent link="base_link"/>
+        <axis xyz="0 1 0"/>
+        <limit effort="0" velocity="0"/>
+    </joint>
+    <joint type="revolute" name="left_rear_wheel_hinge">
+        <child link="left_rear_wheel"/>
+        <parent link="base_link"/>
+        <axis xyz="0 1 0"/>
+        <limit effort="0" velocity="0"/>
+    </joint>
+    <joint type="revolute" name="right_rear_wheel_hinge">
+        <child link="right_rear_wheel"/>
+        <parent link="base_link"/>
+        <axis xyz="0 1 0"/>
+        <limit effort="0" velocity="0"/>
+    </joint>
+</robot>

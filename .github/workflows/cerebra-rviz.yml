@@ -33,4 +33,4 @@ jobs:
           path: cerebra_rviz/cerebra-rviz.deb
       - name: publish package
         run: |
-          curl -X POST -T cerebra_rviz/cerebra-rviz.deb --user api:${{ secrets.PROGET_API_KEY }} "https://packages.avular.dev/debian-packages/upload/development/main/cerebra-rviz.deb"
+          curl -X POST -T cerebra_rviz/cerebra-rviz.deb --user api:${{ secrets.PROGET_API_KEY }} --fail-with-body "https://packages.avular.dev/debian-packages/upload/development/main/cerebra-rviz.deb"

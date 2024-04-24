@@ -1,2 +1,8 @@
 #!/bin/bash
+which rviz2
+if [ $? -ne 0 ]; then
+    echo "Cerebra-RViz requires rviz2 to be available on your path (did you source your ROS 2 workspace?)."
+    exit 1
+fi
+
 rviz2 -d /usr/share/cerebra-rviz/cerebra.rviz
