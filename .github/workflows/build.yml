@@ -179,3 +179,31 @@ jobs:
             echo "Publishing $filename"
             curl -X POST -T $deb --user api:${{ secrets.PROGET_API_KEY }} --fail-with-body "https://packages.avular.dev/debian-packages/upload/development/main/$filename"
           done
+
+  cerebra-rviz-package:
+    runs-on: [docker, tiny-linux]
+    container:
+      image: ubuntu
+    if: ${{inputs.package}}
+    steps:
+      - name: install dependencies
+        run: |
+          apt-get update
+          apt-get install -y make dpkg gzip curl git-lfs
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: create debian package
+        run: |
+          cd cerebra_rviz
+          make
+      - name: upload package
+        uses: actions/upload-artifact@v2
+        with:
+          name: cerebra-rviz
+          path: cerebra_rviz/cerebra-rviz.deb
+      - name: publish package
+        if: ${{inputs.publish}}
+        run: |
+          curl -X POST -T cerebra_rviz/cerebra-rviz.deb --user api:${{ secrets.PROGET_API_KEY }} --fail-with-body "https://packages.avular.dev/debian-packages/upload/development/main/cerebra-rviz.deb"
