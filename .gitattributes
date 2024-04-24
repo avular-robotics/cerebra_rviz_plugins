@@ -1,1 +1,1 @@
-docs/styling/favicon.ico filter=lfs diff=lfs merge=lfs -text
+*.ico filter=lfs diff=lfs merge=lfs -text
