@@ -7,5 +7,6 @@ cerebra-rviz (0.0.0) stable; urgency=low
 cerebra-rviz (0.1.0) stable; urgency=low
 
    * Updated base RViz configuration file with Displays related to Origin.
+   * Added more automatic generation of Debian package files.
 
  -- Niels Rood <n.rood@avular.com>  Wed, 24 Apr 2024 12:38:00 +0200

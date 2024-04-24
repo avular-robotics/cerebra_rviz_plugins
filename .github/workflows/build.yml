@@ -189,7 +189,7 @@ jobs:
       - name: install dependencies
         run: |
           apt-get update
-          apt-get install -y make dpkg gzip curl git-lfs
+          apt-get install -y make dpkg gzip curl git-lfs help2man
       - name: Checkout
         uses: actions/checkout@v4
         with:
