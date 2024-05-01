@@ -36,7 +36,7 @@ InformationPanel::InformationPanel(QWidget * parent)
   // _main_layout->addWidget(_property_widget);
 
   _status_topic = new rviz_common::properties::StringProperty(
-    "Status topic", "/autopilot/behaviortree_executor/status",
+    "Status Topic", "/autopilot/behaviortree_executor/status",
     "The topic for retrieving the robot's status message",
     _root_property, SLOT(initializeTopics()), this);
   _battery_topic = new rviz_common::properties::StringProperty(
