@@ -7,7 +7,7 @@
 # this file. If not, please write to: legal@avular.com
 
 cmake_minimum_required(VERSION 3.8)
-project(example_panel)
+project(cerebra_rviz_plugins)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -24,6 +24,8 @@ find_package(rviz_common REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Gui Widgets)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(origin_msgs REQUIRED)
+find_package(autonomy_msgs REQUIRED)
 
 include_directories(
   include
@@ -32,8 +34,8 @@ include_directories(
 set(library_name ${PROJECT_NAME})
 
 add_library(${library_name} SHARED
-  src/example_panel.cpp
-  include/example_panel/example_panel.h
+  src/information_panel.cpp
+  include/information_panel/information_panel.h
 )
 
 set(dependencies
@@ -42,6 +44,8 @@ set(dependencies
   rclcpp
   rviz_common
   std_msgs
+  origin_msgs
+  autonomy_msgs
 )
 
 ament_target_dependencies(${library_name}
@@ -90,9 +94,11 @@ ament_export_include_directories(include)
 ament_export_targets(${library_name} HAS_LIBRARY_TARGET)
 ament_export_dependencies(
   Qt5
+  rclcpp
   rviz_common
   std_msgs
-  rclcpp
+  origin_msgs
+  autonomy_msgs
 )
 
 ament_package()
