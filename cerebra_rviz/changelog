@@ -10,3 +10,9 @@ cerebra-rviz (0.1.0) stable; urgency=low
    * Added more automatic generation of Debian package files.
 
  -- Niels Rood <n.rood@avular.com>  Wed, 24 Apr 2024 12:38:00 +0200
+
+cerebra-rviz (0.2.0) stable; urgency=low
+
+   * Added InformationPanel from cerebra-rviz-plugins.
+
+  -- Niels Rood <n.rood@avular.com>  Wed, 5 May 2024 17:24:00 +0200
