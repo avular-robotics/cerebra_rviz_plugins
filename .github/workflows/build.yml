@@ -163,13 +163,17 @@ jobs:
           packages=$(if [[ -n "${{ inputs.packages }}" ]]; then echo ${{ inputs.packages }}; else echo ${{ steps.setup_workspace.outputs.packages }}; fi)
           echo "Generating debian packages for $packages"
           $GITHUB_WORKSPACE/packaging/scripts/generate_packages humble $GITHUB_WORKSPACE $packages
+          echo "---"
+          ls -l $GITHUB_WORKSPACE
+          echo "---"
+          ls -l $GITHUB_WORKSPACE/release
 
       - name: Upload packages
         if: ${{inputs.package}}
         uses: actions/upload-artifact@v2
         with:
           name: packages
-          path: $GITHUB_WORKSPACE/*.deb
+          path: ${{ github.workspace }}/release/*.deb
 
       - name: Publish
         if: ${{inputs.publish && inputs.package}}
