@@ -113,9 +113,10 @@ void InformationPanel::onStatusMessage(autonomy_msgs::msg::StatusString::SharedP
 
 void InformationPanel::onBatteryMessage(origin_msgs::msg::BatteryInfo::SharedPtr message)
 {
-  _battery_display->setText(QString("Voltage: %1V | State of charge: %2%")
-      .arg(message->voltage, 0, 'f', 2)
-      .arg(message->state_of_charge));
+  _battery_display->setText(
+    QString("Voltage: %1V | State of charge: %2%")
+    .arg(message->voltage, 0, 'f', 2)
+    .arg(message->state_of_charge));
   _battery_received = true;
   _battery_stale->hide();
 }
