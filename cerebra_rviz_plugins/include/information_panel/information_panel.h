@@ -40,12 +40,22 @@ private Q_SLOTS:
     void onStatusMessage(autonomy_msgs::msg::StatusString::SharedPtr message);
     void onBatteryMessage(origin_msgs::msg::BatteryInfo::SharedPtr message);
 
+    void onStaleTimer();
+
 private:
     rclcpp::Subscription < autonomy_msgs::msg::StatusString > ::SharedPtr _statusSubscription;
     rclcpp::Subscription < origin_msgs::msg::BatteryInfo > ::SharedPtr _batterySubscription;
 
+    bool _status_received {false};
+    bool _battery_received {false};
+
     QLabel * _status_display {nullptr};
     QLabel * _battery_display {nullptr};
+
+    QLabel * _status_stale {nullptr};
+    QLabel * _battery_stale {nullptr};
+
+    QTimer * _stale_timer {nullptr};
 
     QGridLayout * _main_layout {nullptr};
 

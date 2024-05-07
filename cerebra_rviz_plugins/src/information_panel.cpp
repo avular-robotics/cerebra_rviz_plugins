@@ -18,14 +18,30 @@ InformationPanel::InformationPanel(QWidget * parent)
 : rviz_common::Panel(parent)
 {
   _status_display = new QLabel;
+  _status_display->setText("<i>No data received</i>");
   _battery_display = new QLabel;
+  _battery_display->setText("<i>No data received</i>");
+
+  _status_stale = new QLabel{QString("<font color=\"darkorange\"><b>⚠️</b></font>")};
+  _status_stale->setToolTip("No status message received in the last 3 seconds");
+  _status_stale->hide();
+  _battery_stale = new QLabel{QString("<font color=\"darkorange\"><b>⚠️</b></font>")};
+  _battery_stale->setToolTip("No battery information received in the last 3 seconds");
+  _battery_stale->hide();
 
   _main_layout = new QGridLayout;
   _main_layout->setColumnStretch(1, 1);
-  _main_layout->addWidget(new QLabel("Status:"), 0, 0);
+  auto status_prefix = new QLabel("Status:", this);
+  status_prefix->setAlignment(Qt::AlignRight);
+  _main_layout->addWidget(status_prefix, 0, 0);
   _main_layout->addWidget(_status_display, 0, 1);
-  _main_layout->addWidget(new QLabel("Battery Information:"), 1, 0);
-  _main_layout->addWidget(_battery_display);
+  _main_layout->addWidget(_status_stale, 0, 2);
+
+  auto battery_prefix = new QLabel("Battery Information:", this);
+  battery_prefix->setAlignment(Qt::AlignRight);
+  _main_layout->addWidget(battery_prefix, 1, 0);
+  _main_layout->addWidget(_battery_display, 1, 1);
+  _main_layout->addWidget(_battery_stale, 1, 2);
   _main_layout->setContentsMargins(10, 10, 10, 10);
 
   _root_property = new rviz_common::properties::Property("Panel properties");
@@ -45,6 +61,13 @@ InformationPanel::InformationPanel(QWidget * parent)
     _root_property, SLOT(initializeTopics()), this);
 
   setLayout(_main_layout);
+
+  _stale_timer = new QTimer(this);
+  _stale_timer->setInterval(3000);
+  _stale_timer->setSingleShot(false);
+  connect(_stale_timer, SIGNAL(timeout()), this, SLOT(onStaleTimer()));
+
+  _stale_timer->start();
 }
 
 void InformationPanel::onInitialize()
@@ -84,6 +107,8 @@ void InformationPanel::initializeTopics()
 void InformationPanel::onStatusMessage(autonomy_msgs::msg::StatusString::SharedPtr message)
 {
   _status_display->setText(QString::fromStdString(message->status));
+  _status_received = true;
+  _status_stale->hide();
 }
 
 void InformationPanel::onBatteryMessage(origin_msgs::msg::BatteryInfo::SharedPtr message)
@@ -91,6 +116,16 @@ void InformationPanel::onBatteryMessage(origin_msgs::msg::BatteryInfo::SharedPtr
   _battery_display->setText(QString("Voltage: %1V | State of charge: %2%")
       .arg(message->voltage, 0, 'f', 2)
       .arg(message->state_of_charge));
+  _battery_received = true;
+  _battery_stale->hide();
+}
+
+void InformationPanel::onStaleTimer()
+{
+  _status_stale->setVisible(!_status_received);
+  _battery_stale->setVisible(!_battery_received);
+  _status_received = false;
+  _battery_received = false;
 }
 }  // namespace cerebra_rviz_plugins
 PLUGINLIB_EXPORT_CLASS(cerebra_rviz_plugins::InformationPanel, rviz_common::Panel)
