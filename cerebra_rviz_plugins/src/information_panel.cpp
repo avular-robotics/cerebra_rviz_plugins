@@ -88,11 +88,9 @@ void InformationPanel::onStatusMessage(autonomy_msgs::msg::StatusString::SharedP
 
 void InformationPanel::onBatteryMessage(origin_msgs::msg::BatteryInfo::SharedPtr message)
 {
-  QString display_message;
-  QTextStream display_message_stream{&display_message};
-  display_message_stream << "Voltage: " << message->voltage << "V; ";
-  display_message_stream << "State of charge: " << message->state_of_charge << "%";
-  _battery_display->setText(display_message);
+  _battery_display->setText(QString("Voltage: %1V | State of charge: %2%")
+      .arg(message->voltage, 0, 'f', 2)
+      .arg(message->state_of_charge));
 }
 }  // namespace cerebra_rviz_plugins
 PLUGINLIB_EXPORT_CLASS(cerebra_rviz_plugins::InformationPanel, rviz_common::Panel)
