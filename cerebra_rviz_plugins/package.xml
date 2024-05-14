@@ -10,10 +10,9 @@
   this file. If not, please write to: legal@avular.com
 -->
 <package format="3">
-  <name>example_panel</name>
-  <version>0.0.0</version>
-  <description>An example panel that shows a minimal panel with topic publisher and subscriber, and
-    a properties panel</description>
+  <name>cerebra_rviz_plugins</name>
+  <version>0.1.0</version>
+  <description>A panel that shows information about the robot, like its current battery levels, and runtime status</description>
   <maintainer email="n.rood@avular.com">Niels Rood</maintainer>
   <license>Avular Proprietary</license>
 
@@ -37,6 +36,8 @@
     <debian_depend>ros-humble-pluginlib</debian_depend>
     <debian_depend>ros-humble-std-msgs</debian_depend>
     <debian_depend>ros-humble-rviz-common</debian_depend>
+    <debian_depend>origin-msgs</debian_depend>
+    <debian_depend>autonomy-msgs</debian_depend>
     <debian_depend>libqt5core5a</debian_depend>
     <debian_depend>libqt5gui5</debian_depend>
     <debian_depend>libqt5widgets5</debian_depend>

@@ -1,5 +1,10 @@
 # Cerebra RViz Plugins
 
-This repository is made to be a collection of RViz plugins that can be used to work with Avular robots. These plugins can be used to create a unified robot development view, allowing a user to interact with the internals of a robot in a familiar environment.
+This repository is made to be simplify the workflow of using RViz with Avular robots.
 
-> Right now, it only contains an Example Panel, which provides a minimal example on how a Panel plugin can be created, and how such a plugin can interact with the ROS ecosystem.
+The repository contains two main projects:
+
+1. cerebra_rviz_plugins
+    - This project contains RViz plugins that provide extra information or interaction with Avular robots. These plugins can be used to create a unified robot development view, allowing a user to interact with the internals of a robot in a familiar environment.
+2. cerebra_rviz
+    - This project builds a Debian package, which can be used to easily launch RViz with a configuration that shows all relevant information on an Avular robot. The configuration can be launched by running the `cerebra-rviz` command, after installation. The configuration also uses plugins from the cerebra_rviz_plugins project.

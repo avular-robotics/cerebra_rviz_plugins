@@ -7,10 +7,9 @@
   Software End-User License Agreement license with
   this file. If not, please write to: legal@avular.com
 -->
-<library path="example_panel">
-  <class name="cerebra_rviz_plugins/ExamplePanel" type="cerebra_rviz_plugins::ExamplePanel"
+<library path="cerebra_rviz_plugins">
+  <class name="cerebra_rviz_plugins/InformationPanel" type="cerebra_rviz_plugins::InformationPanel"
     base_class_type="rviz_common::Panel">
-    <description>An example panel that shows a minimal panel with topic publisher and
-      subscriber, and a properties panel</description>
+    <description>A panel that shows information about the robot, like its current battery levels, and runtime status</description>
   </class>
 </library>

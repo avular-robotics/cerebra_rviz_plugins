@@ -7,4 +7,4 @@ Description: Run RViz with a configuration specifically meant for working with A
  depends on all the plugins required to run RViz with this configuration file.
 Priority: optional
 Section: utils
-Depends: ros-humble-rviz2
+Depends: ros-humble-rviz2, cerebra-rviz-plugins

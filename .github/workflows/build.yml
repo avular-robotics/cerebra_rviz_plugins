@@ -169,7 +169,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: packages
-          path: $GITHUB_WORKSPACE/*.deb
+          path: ${{ github.workspace }}/release/*.deb
 
       - name: Publish
         if: ${{inputs.publish && inputs.package}}

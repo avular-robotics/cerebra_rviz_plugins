@@ -2,6 +2,8 @@ ros-humble-rclcpp
 ros-humble-pluginlib
 ros-humble-std-msgs
 ros-humble-rviz-common
+origin-msgs
+autonomy-msgs
 libqt5core5a
 libqt5gui5
 libqt5widgets5
