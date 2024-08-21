@@ -16,9 +16,9 @@ In order to use the RViz plugins, you need to take the following steps:
    ```
 
 2. Make sure the [Origin description](https://github.com/avular-robotics/avular_origin_description) is available in your workspace (see instructions in that project's README)
-3. Install the message types required for the plugins using the provided Debian packages:
+3. Install dependencies required for the plugins using the provided Debian packages:
    ```bash
-   sudo apt install ./interface_dependencies/autonomy-msgs_amd64_2.2.0.deb ./interface_dependencies/origin-msgs_amd64_1.0.0.deb
+   sudo apt install ./interface_dependencies/autonomy-msgs_amd64_2.2.0.deb ./interface_dependencies/origin-msgs_amd64_1.0.0.deb ./interface_dependencies/cmake-avular_amd64_3.0.0.deb ./interface_dependencies/ament-copyright-avular_amd64_3.0.0.deb
    ```
 
 The `cerebra.rviz` configuration file can be used by using the following command:
