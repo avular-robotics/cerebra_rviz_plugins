@@ -91,8 +91,9 @@ jobs:
         run: |
           apt update
           apt install -y --no-install-recommends $(cat $GITHUB_WORKSPACE/repo/dependencies-${{inputs.arch}}.txt)
-          # Install build dependencies
+          # Install build/package dependencies
           apt install -y --no-install-recommends ssh git python3-colcon-common-extensions build-essential curl
+          pip install avular-versioning -i https://packages.avular.dev/pypi/avular-pypi/simple
 
       - name: Setup workspace
         id: setup_workspace
