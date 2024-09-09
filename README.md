@@ -1,8 +1,8 @@
 # Cerebra RViz Plugins
 
-This repository is made to be simplify the workflow of using RViz with Avular robots.
+This repository is made to simplify the workflow of using RViz with Avular robots.
 
-The repository provides RViz plugins that display information specific for Avular robots. It also contains an convenience `cerebra.rviz` configuration file to set up RViz to show all information that can be used while developing for Avular robots.
+The repository provides RViz plugins that display information specific for Avular robots. It also contains a convenience `cerebra.rviz` configuration file to set up RViz with displays and panels to visualize topics that are available on Avular robots.
 
 ## How to use
 
@@ -10,7 +10,7 @@ The repository provides RViz plugins that display information specific for Avula
 
 In order to install the RViz plugins, you need to take the following steps:
 
-1. Make sure the [Origin description](https://github.com/avular-robotics/avular_origin_description) is available in your workspace (see instructions in that project's README)
+1. Make sure the [Origin description](https://github.com/avular-robotics/avular_origin_description) is available in your workspace
 2. Clone this repository into your [ROS2 workspace](https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html)
    ```bash
    # in the src folder of your ROS workspace
