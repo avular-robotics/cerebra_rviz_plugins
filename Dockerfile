@@ -14,26 +14,23 @@ RUN apt-get update && apt-get install -y \
     libqt5core5a libqt5gui5 libqt5widgets5 \
     && git lfs install
 
+# install packaged dependencies
+COPY interface_dependencies /root/interface_dependencies
+RUN apt-get install -y \
+    /root/interface_dependencies/autonomy-msgs_amd64_2.2.0.deb \
+    /root/interface_dependencies/origin-msgs_amd64_1.0.0.deb \
+    /root/interface_dependencies/cmake-avular_amd64_3.0.0.deb \
+    /root/interface_dependencies/ament-copyright-avular_amd64_3.0.0.deb
+
 # create ROS workspace
 RUN mkdir -p /root/ws/src
 WORKDIR /root/ws/src
 
-# clone repository
-RUN mkdir -p -m 0700 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
-RUN --mount=type=ssh git clone git@github.com:avular-robotics/cerebra_rviz_plugins.git \
-    && cd cerebra_rviz_plugins && git switch ESSENTIALS-2074-prepare-public-release
-# RUN git clone https://github.com/avular-robotics/cerebra_rviz_plugins.git
+# copy cerebra_rviz_plugins package to workspace
+COPY cerebra_rviz_plugins /root/ws/src/cerebra_rviz_plugins
 
 # clone robot description
 RUN git clone https://github.com/avular-robotics/avular_origin_description.git
-
-# install packaged dependencies
-WORKDIR /root/ws/src/cerebra_rviz_plugins
-RUN apt-get install -y \
-    ./interface_dependencies/autonomy-msgs_amd64_2.2.0.deb \
-    ./interface_dependencies/origin-msgs_amd64_1.0.0.deb \
-    ./interface_dependencies/cmake-avular_amd64_3.0.0.deb \
-    ./interface_dependencies/ament-copyright-avular_amd64_3.0.0.deb
 
 # build workspace
 WORKDIR /root/ws
