@@ -124,7 +124,7 @@ Visualization Manager:
         Filter size: 10
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /autopilot/map
+        Value: /autopilot/map_external
       Update Topic:
         Depth: 5
         Durability Policy: Volatile
