@@ -29,39 +29,47 @@ This can also be used on Windows, [as long as you have Docker installed with the
  docker run --rm -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0 cerebra_rviz <ip address of robot>
 ```
 
-### Install in a workspace
+### Install and use in a ROS workspace
 
-In order to install the RViz plugins in an existing ROS workspace, you need to take the following steps:
+Cerebra RViz is part of the cerebra_rviz_plugins package. This package can be included in a ROS workspace to build it from source. In order to use it with a robot, you should already have access to the robot's ROS network.
 
-0.
-1. Make sure the [Origin description](https://github.com/avular-robotics/avular_origin_description) is available in your ROS workspace
-2. Clone this repository into your [ROS2 workspace](https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html)
+Take the following steps to install and use Cerebra RViz in an existing ROS workspace:
+
+1. Install all the system dependencies using the following command:
+   ```bash
+   apt-get update && apt-get install -y \
+     ssh git git-lfs \
+     ros-humble-rclcpp ros-humble-std-msgs ros-humble-rviz2 \
+     ros-humble-rviz-common ros-humble-pluginlib \
+     ros-humble-ament-lint-auto ros-humble-ament-lint-common \
+     ros-humble-ament-cmake-clang-format \
+     libqt5core5a libqt5gui5 libqt5widgets5 \
+     && git lfs install
+   ```
+2. Make sure the [Origin description](https://github.com/avular-robotics/avular_origin_description) is available in your ROS workspace
+3. Clone this repository into your [ROS2 workspace](https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html)
    ```bash
    # in the src folder of your ROS workspace
    git clone https://github.com/avular-robotics/cerebra_rviz_plugins.git
    cd cerebra_rviz_plugins
    git lfs pull
    ```
-3. Install dependencies required for the plugins using the provided Debian packages:
+4. Install dependencies required for the plugins using the provided Debian packages:
    ```bash
    # in the root of this repository
    sudo apt install ./interface_dependencies/autonomy-msgs_amd64_2.2.0.deb ./interface_dependencies/origin-msgs_amd64_1.0.0.deb ./interface_dependencies/cmake-avular_amd64_3.0.0.deb ./interface_dependencies/ament-copyright-avular_amd64_3.0.0.deb ros-humble-ament-cmake-clang-format
    ```
-4. Build and re-source your ROS workspace to make the cerebra_rviz_plugins package available for RViz to use. The commands below are based on the [ROS2 documentation](https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html#build-the-workspace-with-colcon); your workspace might need a different set of commands in order to build it.
+5. Build and re-source your ROS workspace to make the cerebra_rviz_plugins package available for RViz to use. The commands below are based on the [ROS2 documentation](https://docs.ros.org/en/rolling/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html#build-the-workspace-with-colcon); your workspace might need a different set of commands in order to build it.
    ```bash
    # In the root directory of your ROS workspace.
    source /opt/ros/humble/setup.bash
    colcon build
    source install/setup.bash
    ```
-
-### Launch default configuration file
-
-Once the RViz plugins are installed, RViz can be launch with the `cerebra.rviz` configuration file using the following command:
-
-```bash
-ros2 launch cerebra_rviz_plugins cerebra.launch.py
-```
+6. Launch Cerebra RViz using the following command:
+   ```bash
+   ros2 launch cerebra_rviz_plugins cerebra.launch.py
+   ```
 
 ## Tips and Tricks
 
