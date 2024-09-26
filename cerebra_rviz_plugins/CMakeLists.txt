@@ -78,6 +78,11 @@ install(
   DESTINATION include/
 )
 
+install(
+  DIRECTORY launch
+  DESTINATION share/${library_name}/
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights

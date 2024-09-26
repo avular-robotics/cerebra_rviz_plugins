@@ -12,7 +12,8 @@
 <package format="3">
   <name>cerebra_rviz_plugins</name>
   <version>0.1.0</version>
-  <description>A panel that shows information about the robot, like its current battery levels, and runtime status</description>
+  <description>A panel that shows information about the robot, like its current battery levels, and
+    runtime status</description>
   <maintainer email="n.rood@avular.com">Niels Rood</maintainer>
   <license>Avular Proprietary</license>
 
@@ -22,6 +23,9 @@
   <depend>pluginlib</depend>
   <depend>std_msgs</depend>
   <depend>rviz_common</depend>
+  <depend>origin-msgs</depend>
+  <depend>autonomy-msgs</depend>
+  <depend>ament_cmake_clang_format</depend>
 
   <exec_depend>libqt5-core</exec_depend>
   <exec_depend>libqt5-gui</exec_depend>
@@ -43,5 +47,6 @@
     <debian_depend>libqt5widgets5</debian_depend>
     <debian_depend>ros-humble-ament-lint-auto</debian_depend>
     <debian_depend>ros-humble-ament-lint-common</debian_depend>
+    <debian_depend>ros-humble-ament-cmake-clang-format</debian_depend>
   </export>
 </package>

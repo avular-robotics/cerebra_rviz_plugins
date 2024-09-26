@@ -14,21 +14,23 @@
 
 namespace cerebra_rviz_plugins
 {
-InformationPanel::InformationPanel(QWidget * parent)
-: rviz_common::Panel(parent)
+InformationPanel::InformationPanel(QWidget* parent) : rviz_common::Panel(parent)
 {
   _status_display = new QLabel;
   _status_display->setText("<i>No data received</i>");
   _status_display->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+  _status_display->setWordWrap(true);
+  _status_display->setMaximumWidth(300);
   _battery_display = new QLabel;
   _battery_display->setText("<i>No data received</i>");
   _battery_display->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+  _battery_display->setWordWrap(true);
 
-  _status_stale = new QLabel{QString("<font color=\"darkorange\"><b>⚠️</b></font>")};
+  _status_stale = new QLabel{ QString("<font color=\"darkorange\"><b>⚠️</b></font>") };
   _status_stale->setToolTip("No status message received in the last 3 seconds");
   _status_stale->setAlignment(Qt::AlignLeft | Qt::AlignTop);
   _status_stale->hide();
-  _battery_stale = new QLabel{QString("<font color=\"darkorange\"><b>⚠️</b></font>")};
+  _battery_stale = new QLabel{ QString("<font color=\"darkorange\"><b>⚠️</b></font>") };
   _battery_stale->setToolTip("No battery information received in the last 3 seconds");
   _battery_stale->setAlignment(Qt::AlignLeft | Qt::AlignTop);
   _battery_stale->hide();
@@ -56,14 +58,13 @@ InformationPanel::InformationPanel(QWidget * parent)
   // _property_widget->getTree()->setModel(_property_model);
   // _main_layout->addWidget(_property_widget);
 
-  _status_topic = new rviz_common::properties::StringProperty(
-    "Status Topic", "/autopilot/behaviortree_executor/status",
-    "The topic for retrieving the robot's status message",
-    _root_property, SLOT(initializeTopics()), this);
-  _battery_topic = new rviz_common::properties::StringProperty(
-    "Battery Topic", "/robot/battery/info",
-    "The topic for retrieving the robot's battery information",
-    _root_property, SLOT(initializeTopics()), this);
+  _status_topic = new rviz_common::properties::StringProperty("Status Topic", "/autopilot/behaviortree_executor/status",
+                                                              "The topic for retrieving the robot's status message",
+                                                              _root_property, SLOT(initializeTopics()), this);
+  _battery_topic = new rviz_common::properties::StringProperty("Battery Topic", "/robot/battery/info",
+                                                               "The topic for retrieving the robot's battery "
+                                                               "information",
+                                                               _root_property, SLOT(initializeTopics()), this);
 
   setLayout(_main_layout);
 
@@ -90,7 +91,7 @@ void InformationPanel::save(rviz_common::Config config) const
   _root_property->save(config);
 }
 
-void InformationPanel::load(const rviz_common::Config & config)
+void InformationPanel::load(const rviz_common::Config& config)
 {
   rviz_common::Panel::load(config);
   // _property_widget->save(config);
@@ -99,22 +100,22 @@ void InformationPanel::load(const rviz_common::Config & config)
 
 void InformationPanel::initializeTopics()
 {
-  if (auto ros_node_abstraction = getDisplayContext()->getRosNodeAbstraction().lock()) {
+  if (auto ros_node_abstraction = getDisplayContext()->getRosNodeAbstraction().lock())
+  {
     auto node = ros_node_abstraction->get_raw_node();
 
     _statusSubscription = node->create_subscription<autonomy_msgs::msg::StatusString>(
-      _status_topic->getStdString(), 1,
-      std::bind(&InformationPanel::onStatusMessage, this, std::placeholders::_1));
+        _status_topic->getStdString(), 1, std::bind(&InformationPanel::onStatusMessage, this, std::placeholders::_1));
 
     _batterySubscription = node->create_subscription<origin_msgs::msg::BatteryInfo>(
-      _battery_topic->getStdString(), 1,
-      std::bind(&InformationPanel::onBatteryMessage, this, std::placeholders::_1));
+        _battery_topic->getStdString(), 1, std::bind(&InformationPanel::onBatteryMessage, this, std::placeholders::_1));
   }
 }
 
 void InformationPanel::onStatusMessage(autonomy_msgs::msg::StatusString::SharedPtr message)
 {
   _status_display->setText(QString::fromStdString(message->status));
+  _status_display->setToolTip(QString::fromStdString(message->status));
   _status_stale->hide();
   _status_stale_timer->start(3000);
 }
@@ -122,9 +123,7 @@ void InformationPanel::onStatusMessage(autonomy_msgs::msg::StatusString::SharedP
 void InformationPanel::onBatteryMessage(origin_msgs::msg::BatteryInfo::SharedPtr message)
 {
   _battery_display->setText(
-    QString("Voltage: %1V | State of charge: %2%")
-    .arg(message->voltage, 0, 'f', 2)
-    .arg(message->state_of_charge));
+      QString("Voltage: %1V | State of charge: %2%").arg(message->voltage, 0, 'f', 2).arg(message->state_of_charge));
   _battery_stale->hide();
   _battery_stale_timer->start(3000);
 }
