@@ -17,6 +17,12 @@ You can build the Docker container using the following command in the root of th
 docker build -t cerebra_rviz .
 ```
 
+To enable the Docker container to access your display, you might need to run the following command before running the container:
+
+```bash
+xhost +local:root
+```
+
 After building the container, you can use the following command to launch Cerebra RViz:
 
 ```bash
@@ -26,7 +32,7 @@ docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0  cerebra_rviz <ip
 This can also be used on Windows, [as long as you have Docker installed with the WSL2 backend](https://docs.docker.com/engine/install) (more on WSL2 can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install)). The launch command is a bit different in this case:
 
 ```bash
- docker run --rm -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0 cerebra_rviz <ip address of robot>
+ docker run --rm -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -e DISPLAY=${DISPLAY} cerebra_rviz <ip address of robot>
 ```
 
 ### Install and use in a ROS workspace
@@ -37,7 +43,7 @@ Take the following steps to install and use Cerebra RViz in an existing ROS work
 
 1. Install all the system dependencies using the following command:
    ```bash
-   apt-get update && apt-get install -y \
+   sudo apt-get update && sudo apt-get install -y \
      ssh git git-lfs \
      ros-humble-rclcpp ros-humble-std-msgs ros-humble-rviz2 \
      ros-humble-rviz-common ros-humble-pluginlib \
