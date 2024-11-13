@@ -26,13 +26,14 @@ xhost +local:root
 After building the container, you can use the following command to launch Cerebra RViz:
 
 ```bash
-docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0  cerebra_rviz <ip address of robot>
+docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=${DISPLAY}  cerebra_rviz <robot_ip_address>
 ```
+If your `<robot_ip_address>` is unknown, consult the [user manual](https://avular-robotics.github.io/origin_one/latest/software_development/preparations/networking/). 
 
 This can also be used on Windows, [as long as you have Docker installed with the WSL2 backend](https://docs.docker.com/engine/install) (more on WSL2 can be found [here](https://learn.microsoft.com/en-us/windows/wsl/install)). The launch command is a bit different in this case:
 
 ```bash
- docker run --rm -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -e DISPLAY=${DISPLAY} cerebra_rviz <ip address of robot>
+ docker run --rm -v /run/desktop/mnt/host/wslg/.X11-unix:/tmp/.X11-unix -e DISPLAY=${DISPLAY} cerebra_rviz <robot_ip_address>
 ```
 
 ### Install and use in a ROS workspace
