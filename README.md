@@ -26,7 +26,7 @@ xhost +local:root
 After building the container, you can use the following command to launch Cerebra RViz:
 
 ```bash
-docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:${DISPLAY}  cerebra_rviz <robot_ip_address>
+docker run --rm -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=${DISPLAY}  cerebra_rviz <robot_ip_address>
 ```
 If your `<robot_ip_address>` is unknown, consult the [user manual](https://avular-robotics.github.io/origin_one/latest/software_development/preparations/networking/). 
 
