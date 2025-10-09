@@ -11,7 +11,7 @@ then
 fi
 
 # Start the Zenoh bridge connecting to the supplied IP address
-zenoh-bridge-ros2dds -m client -e tcp/$1:7447 &
+zenoh-bridge-ros2dds -e tcp/$1:7447 client &
 
 # Launch cerebra rviz
 ros2 launch cerebra_rviz_plugins cerebra.launch.py
