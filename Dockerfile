@@ -6,7 +6,7 @@ RUN echo "deb [trusted=yes] https://download.eclipse.org/zenoh/debian-repo/ /" |
 # install base dependencies
 RUN apt-get update && apt-get install -y \
     ssh git git-lfs \
-    zenoh-bridge-ros2dds=0.11.0 \
+    zenoh-bridge-ros2dds=1.4.0 \
     ros-humble-rclcpp ros-humble-std-msgs ros-humble-rviz2 \
     ros-humble-rviz-common ros-humble-pluginlib \
     ros-humble-ament-lint-auto ros-humble-ament-lint-common \
@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y \
 # install packaged dependencies
 COPY interface_dependencies /root/interface_dependencies
 RUN apt-get install -y \
-    /root/interface_dependencies/autonomy-msgs_amd64_2.2.0.deb \
-    /root/interface_dependencies/origin-msgs_amd64_1.0.0.deb \
+    /root/interface_dependencies/autonomy-msgs_amd64_2.4.0.deb \
+    /root/interface_dependencies/origin-msgs_amd64_2.3.0.deb \
     /root/interface_dependencies/cmake-avular_amd64_3.0.0.deb \
     /root/interface_dependencies/ament-copyright-avular_amd64_3.0.0.deb
 

@@ -1,3 +1,7 @@
+sudo apt-get update && sudo apt-get install -y git-lfs
+git lfs install
+git lfs pull
+
 # Cerebra RViz Plugins
 
 This repository is made to simplify the workflow of using RViz with Avular robots.
